@@ -65,7 +65,94 @@
 
   <script>
     "use strict";
-    // Код писать здесь
-    console.log("It works!");
+// Получаем элементы формы
+    const nameInput = document.querySelector('.add-form-name');
+    const commentInput = document.querySelector('.add-form-text');
+    const addButton = document.querySelector('.add-form-button');
+
+// Получаем элемент списка комментариев
+    const commentsList = document.querySelector('.comments');
+
+// Обработчик события клика на кнопку "Написать"
+    addButton.addEventListener('click', function () {
+  // Получаем значения полей ввода
+    const nameValue = nameInput.value;
+    const commentValue = commentInput.value;
+  
+  // Проверяем, что поля не пустые
+  if (nameValue.trim() !== '' && commentValue.trim() !== '') {
+    // Создаем элементы комментария
+    const commentItem = document.createElement('li');
+    commentItem.classList.add('comment');
+
+    const commentHeader = document.createElement('div');
+    commentHeader.classList.add('comment-header');
+    
+    const commentAuthor = document.createElement('div');
+    commentAuthor.textContent = nameValue;
+
+    const commentDate = document.createElement('div');
+    commentDate.textContent = getCurrentDateTimeString();
+
+    const commentBody = document.createElement('div');
+    commentBody.classList.add('comment-body');
+    
+    const commentText = document.createElement('div');
+    commentText.classList.add('comment-text');
+    commentText.textContent = commentValue;
+
+    const commentFooter = document.createElement('div');
+    commentFooter.classList.add('comment-footer');
+    
+    const likes = document.createElement('div');
+    likes.classList.add('likes');
+    
+    const likesCounter = document.createElement('span');
+    likesCounter.classList.add('likes-counter');
+    likesCounter.textContent = '0';
+    
+    const likeButton = document.createElement('button');
+    likeButton.classList.add('like-button');
+    
+    // Собираем элементы комментария
+    commentHeader.appendChild(commentAuthor);
+    commentHeader.appendChild(commentDate);
+
+    commentBody.appendChild(commentText);
+
+    likes.appendChild(likesCounter);
+    likes.appendChild(likeButton);
+
+    commentFooter.appendChild(likes);
+
+    commentItem.appendChild(commentHeader);
+    commentItem.appendChild(commentBody);
+    commentItem.appendChild(commentFooter);
+
+    // Добавляем комментарий в список
+    commentsList.appendChild(commentItem);
+
+    // Сбрасываем значения полей ввода
+    nameInput.value = '';
+    commentInput.value = '';
+  }
+});
+
+// Функция для получения текущей даты и времени в формате "дд.мм.гггг чч:мм"
+function getCurrentDateTimeString() {
+  const currentDate = new Date();
+  
+  const day = String(currentDate.getDate()).padStart(2, '0');
+  const month = String(currentDate.getMonth() + 1).padStart(2, '0');
+  const year = String(currentDate.getFullYear());
+  
+  const hours = String(currentDate.getHours()).padStart(2, '0');
+  const minutes = String(currentDate.getMinutes()).padStart(2, '0');
+  
+  return `${day}.${month}.${year} ${hours}:${minutes}`;
+}
+
+console.log("It works!");
+;
   </script>
 </html>
